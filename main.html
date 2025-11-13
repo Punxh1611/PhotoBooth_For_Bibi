@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="icon" type="image/gif" href="pixel-heart.gif">
+    <title>PhotoBooth</title>
+    <script type="text/javascript" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Jersey+10&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container text-center py-4">
+        <h3 class="mb-3">PhotoBooth</h3>
+        <div class="video-container">
+            <video id="webcam" autoplay playsinline width="640" height="480"></video>
+            <!-- Frame Overlay ทับบน Video -->
+            <div id="timer-overlay" class="timer-overlay">
+            <span id="countdown-number">3</span>
+        </div>
+        </div>
+        <div id="photo" class="mt-4"></div>
+        <div class="snap mt-3">
+            <div class="dropdown">
+                <!-- timer -->
+                <button class="dropbtn">Time</button>
+                <div class="dropdown-content">
+                    <a href="#" onclick="setTimer(3)">3 sec</a>
+                    <a href="#" onclick="setTimer(5)">5 sec</a>
+                    <a href="#" onclick="setTimer(10)">10 sec</a>
+                    <a href="#" onclick="setTimer(15)">15 sec</a>
+                </div>
+            </div>
+            <a id="snapBtn" onclick="snapWithTimer()">Snap</a> <!-- snapshot -->            
+        </div>
+        <script src="script.js"></script>
+</body>
+</html>

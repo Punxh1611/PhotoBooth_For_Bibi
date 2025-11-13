@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="frame.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/gif" href="pixel-heart.gif">
+    <title>PhotoBooth</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Jersey+10&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container text-center py-4">
+        <p class="mb-4">Choose your favorite frame</p>
+        <!-- โซนกรอบ + รูป -->
+        <div class="p1" id="photoArea">
+            <div id="photoFrame" class="photo-frame"></div>
+            <!-- overlay เฟรม -->
+            <img id="overlayFrame" class="overlay-frame" src="" alt="">
+            
+        </div>
+        <div class="photo-group">
+            <a href="#" class="photo-option frame1" onclick="selectFrame('frame/frame1.png')">blue
+            </a>
+            <a href="#" class="photo-option frame2" onclick="selectFrame('frame/frame2.png')">golden
+            </a>
+            <a id="downloadAllBtn" href="#" onclick="downloadAll()" class="download-btn">Download</a>
+        </div>
+
+    </div>
+
+    <script>
+        let savedPhotos = JSON.parse(localStorage.getItem("photos")) || [];
+        const photoContainer = document.getElementById("photoFrame");
+        const overlay = document.getElementById("overlayFrame");
+
+        // แสดงรูปที่บันทึกไว้
+        savedPhotos.forEach(photoSrc => {
+            let img = document.createElement("img");
+            img.src = photoSrc;
+            img.classList.add("photo-item");
+            photoContainer.appendChild(img);
+        });
+
+        // เลือกกรอบ
+        function selectFrame(frameSrc) {
+            overlay.src = frameSrc;
+            overlay.style.display = "block";
+        }
+
+        // ดาวน์โหลดรูปพร้อมกรอบ
+        function downloadAll() {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // ตั้งขนาดความละเอียดสูง
+            const finalWidth = 707;
+            const finalHeight = 707 * 3; // 3 รูป
+            
+            canvas.width = finalWidth;
+            canvas.height = finalHeight;
+            
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            const images = photoContainer.getElementsByTagName('img');
+            let loadedCount = 0;
+            const hasFrame = overlay.style.display === 'block' && overlay.src;
+            const totalImages = images.length + (hasFrame ? 1 : 0);
+            
+            if (images.length === 0) {
+                alert('ไม่มีรูปภาพให้ดาวน์โหลด');
+                return;
+            }
+            
+            function checkComplete() {
+                loadedCount++;
+                if (loadedCount === totalImages) {
+                    canvas.toBlob(blob => {
+                        const a = document.createElement('a');
+                        a.href = URL.createObjectURL(blob);
+                        a.download = 'photobooth-with-frame.png';
+                        a.click();
+                        URL.revokeObjectURL(a.href);
+                    }, 'image/png');
+                }
+            }
+            
+            let currentY = 0;
+            const heightPerPhoto = finalHeight / images.length;
+            
+            Array.from(images).forEach((img, index) => {
+                const imgCopy = new Image();
+                imgCopy.crossOrigin = 'anonymous';
+                imgCopy.onload = function() {
+                    // วาดรูปให้เต็มพื้นที่ที่กำหนด
+                    ctx.drawImage(imgCopy, 0, currentY, finalWidth, heightPerPhoto);
+                    currentY += heightPerPhoto;
+                    checkComplete();
+                };
+                imgCopy.src = img.src;
+            });
+            
+            if (hasFrame) {
+                const frameCopy = new Image();
+                frameCopy.crossOrigin = 'anonymous';
+                frameCopy.onload = function() {
+                    ctx.drawImage(frameCopy, 0, 0, finalWidth, finalHeight);
+                    checkComplete();
+                };
+                frameCopy.src = overlay.src;
+            }
+        }
+    </script>
+</body>
+
+</html>

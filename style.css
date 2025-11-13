@@ -1,0 +1,177 @@
+body{
+    background: #EEAECA;
+    background: radial-gradient(circle,rgba(238, 174, 202, 1) 0%, rgba(255, 255, 255, 1) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contaniner{
+    padding: 5px;
+    max-width: 800px;
+}
+h3{
+    text-align: center;
+    font-size: 45px; /* หรือ 50px, 55px ตามชอบ */
+    color: #ffffff;
+    font-family: "Jersey 10", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    margin: 25px 0 20px 0; /* บน 25px, ล่าง 20px */
+    padding: 15px 0; /* เพิ่มพื้นที่ภายใน */
+}
+
+/* webcam */
+.video-container {
+    position: relative; /* สำคัญมาก! ทำให้ element ลูกวางทับได้ */
+    display: inline-block; /* ให้กล่องพอดีกับ video */
+    max-width: 640px;
+    margin: 0 auto;
+}
+video{
+    border: 2px solid black;
+    height: auto;
+    width: 100;
+}
+
+/*Timer ทับบน video*/
+.timer-overlay {
+    position: absolute; /* ลอยทับบน video */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* พื้นหลังดำโปร่งใส */
+    display: none; /* ซ่อนไว้ตอนเริ่มต้น */
+    justify-content: center; /* จัดกึ่งกลางแนวนอน */
+    align-items: center; /* จัดกึ่งกลางแนวตั้ง */
+    z-index: 100; /* อยู่บนสุด */
+}
+
+#countdown-number {
+    font-size: 120px; /* ขนาดใหญ่มาก */
+    font-weight: bold;
+    color: #ffffff; /* สีเหลืองตามธีมของคุณ */
+    font-family: "Jersey 10", sans-serif;
+    text-shadow: 0 0 30px rgba(255, 111, 243, 0.8); /* เงาเรืองแสง */
+    animation: pulse 1s ease-in-out; /* เอฟเฟกต์เด้ง */
+}
+/* ==================== Animation เด้ง ==================== */
+@keyframes pulse {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* ==================== เมื่อแสดง Timer ==================== */
+.timer-overlay.show {
+    display: flex; /* แสดงและจัดกึ่งกลาง */
+}
+/* button snap */
+.snap{
+    padding: 5px;
+    text-align: center;
+    margin-top: 10px;
+}
+#snapBtn{
+    font-family: "Jersey 10", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 30px;
+    color: #EEAECA ;
+    text-decoration: none;
+    padding: 5px;
+    border: #EEAECA 3px solid;
+    background-color: #ffffff;
+    border-radius: 10px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+    padding: 6px 20px;
+}
+#snapBtn:hover {
+    background-color: #EEAECA;
+    color: #ffffff;
+    box-shadow: 0 0 15px #c7487f;
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+}
+.dropbtn{
+    font-family: "Jersey 10", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 30px;
+    color: #a6c7f8 ;
+    text-decoration: none;
+    padding: 5px;
+    border: #a6c7f8 3px solid;
+    background-color: #ffffff;
+    border-radius: 10px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+    padding: 6px 20px;
+}
+.dropbtn:hover {
+    background-color: #a6c7f8;
+    color: #ffffff;
+    box-shadow: 0 0 15px #2773e4;
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+}
+/* photo grid */
+#photo{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 10px;
+    justify-items: center;
+    margin-top: 10px;
+}
+
+#photo img {
+    width: 160px;
+    height: 120px;
+    border: 2px solid black;
+    border-radius: 5px;
+    object-fit: cover;
+}
+/* dropdown */
+.dropdown {
+    position: relative;
+    display: inline-block;
+    color:white;
+    margin: 0 5px;
+    transition: background 0.2s ease;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;   
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  background-color: aliceblue;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {background-color: #c2c2c2;}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
